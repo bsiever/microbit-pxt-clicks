@@ -1,8 +1,11 @@
-# i2c2
+# Clicks
 
 ```package
-pins=github:bsiever/microbit-pxt-i2cpins
+pins=github:bsiever/microbit-pxt-clicks
 ```
+
+
+# TODO
 
 This extension allows non-default pins to be used for the micro:bit's I2C
 

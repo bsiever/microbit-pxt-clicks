@@ -2,9 +2,8 @@
 
 //% color=#0000FF 
 //% icon="\uf074"
-//% block="i2c Reroute"
-//% group="micro:bit (V2)"
-namespace i2crr {
+//% block="Clicks"
+namespace clicks {
     //% blockId="setI2CPins" block="set i2c data to %sdaPin and clock to %sclPin|"
     //% shim=i2crr::setI2CPins
     //% sdaPin.defl=DigitalPin.P1 sclPin.defl=DigitalPin.P2
