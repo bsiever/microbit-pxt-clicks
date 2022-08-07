@@ -8,9 +8,7 @@
     },
     "files": [
         "README.md",
-        "clicks.ts",
-        "shims.d.ts",
-        "enums.d.ts"
+        "clicks.ts"
     ],
     "testFiles": [
         "test.ts"
