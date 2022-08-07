@@ -124,6 +124,7 @@ loops.everyInterval(singleClickCheckTime, function() {
         EventBusValue.MICROBIT_BUTTON_EVT_UP, () => button(Button.AB))
 
     //% blockId=onSingleClick block="on single click |%NAME"
+    //% weight=50
     export function onSingleClick(button: Button, body: Action) {
          switch(button) {
              case Button.A:
@@ -138,7 +139,8 @@ loops.everyInterval(singleClickCheckTime, function() {
          }
     }
 
-    //% blockId=onDoubleClick block="on double click |%NAME"
+    //% blockId=onDoubleClick block="on double click |%NAME" 
+    //% weight=25
     export function onDoubleClick(button: Button, body: Action) {
         switch (button) {
             case Button.A:
@@ -154,6 +156,7 @@ loops.everyInterval(singleClickCheckTime, function() {
     }
 
     //% blockId=onLongClick block="on long click |%NAME"
+    //% weight=10
     export function onLongClick(button: Button, body: Action) {
         switch (button) {
             case Button.A:
