@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "pxt-microbit": "^4.0.16",
+    "webusb": "^1.3.1"
+  }
+}

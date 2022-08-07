@@ -1,0 +1,36 @@
+{
+    "name": "microbit-pxt-i2cpins",
+    "version": "0.0.6",
+    "description": "Reroute External I2C Pins",
+    "license": "MIT",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "README.md",
+        "i2crr.ts",
+        "i2crr.cpp",
+        "shims.d.ts",
+        "enums.d.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "public": true,
+    "targetVersions": {
+        "target": "4.0.16",
+        "targetId": "microbit"
+    },
+    "supportedTargets": [
+        "microbit"
+    ],
+    "preferredEditor": "tsprj",
+    "authors": [
+        "Bill Siever <bsiever@gmail.com>"
+    ],
+    "card": {
+        "name": "Reroute External I2C pins",
+        "imageUrl": "file:../icon.png",
+        "feedbackUrl": "http://siever.info"
+    }
+}
