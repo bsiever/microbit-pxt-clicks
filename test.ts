@@ -1,4 +1,28 @@
 serial.writeLine("starting...")
-serial.writeLine("Press A to configure pins (P1=SDA, P2=SCL) and write a number")
-serial.writeLine("Press B to write a number")
-// serial.writeLine("If sensor is NOT connected it should show -Infinity (for temp) and an error message")
+clicks.onDoubleClick(Button.AB, function () {
+    serial.writeLine("AB double")
+})
+clicks.onSingleClick(Button.A, function () {
+    serial.writeLine("A single")
+})
+clicks.onLongClick(Button.B, function () {
+    serial.writeLine("B long")
+})
+clicks.onLongClick(Button.A, function () {
+    serial.writeLine("A long")
+})
+clicks.onSingleClick(Button.B, function () {
+    serial.writeLine("B single")
+})
+clicks.onDoubleClick(Button.A, function () {
+    serial.writeLine("A double")
+})
+clicks.onSingleClick(Button.AB, function () {
+    serial.writeLine("AB single")
+})
+clicks.onDoubleClick(Button.B, function () {
+    serial.writeLine("B double")
+})
+clicks.onLongClick(Button.AB, function () {
+    serial.writeLine("AB long")
+})

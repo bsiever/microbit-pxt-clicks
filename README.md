@@ -5,25 +5,34 @@ pins=github:bsiever/microbit-pxt-clicks
 ```
 
 
-# TODO
-
-This extension allows non-default pins to be used for the micro:bit's I2C
-
-**Micro:bit v1 only has one I2C port. Changing the pins will prevent the accelerometer/compass from working!!!**
-
-# Setting the pins
+# Single Clicks
 
 ```sig
-pins.setI2CPins(sda : DigitalPin,  scl : DigitalPin) : void
-```
+clicks.onSingleClick(button: Button, body: Action) : void
+``` 
 
-Set the Data and Clock pins.
+Set the actions to do on a single click. *NOTE: Only button A and button B are supported separately.  Button AB will not work*
+
+# Double Clicks
+
+```sig
+clicks.onDoubleClick(button: Button, body: Action) : void
+``` 
+
+Set the actions to do on a double click. *NOTE: Only button A and button B are supported separately.  Button AB will not work*
+
+# Long Clicks
+
+```sig
+clicks.onLongClick(button: Button, body: Action) : void
+``` 
+
+Set the actions to do on a long click. *NOTE: Only button A and button B are supported separately.  Button AB will not work*
 
 # Acknowledgements 
 
-Development of this extension was sponsored by [MakeKit](https://www.makekit.no/).
 
-Icon based on [Font Awesome icon 0xF074](https://www.iconfinder.com/icons/213043/f074_icon) SVG.
+Icon based on [Font Awesome icon 0xF0A7](https://www.iconfinder.com/search?q=f0a7) SVG.
 
 <script src="https://makecode.com/gh-pages-embed.js"></script>
 <script>makeCodeRender("{{ site.makecode.home_url }}", "{{ site.github.owner_name }}/{{ site.github.repository_name }}");</script>
