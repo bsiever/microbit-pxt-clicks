@@ -18,7 +18,7 @@ const doubleClickTime = 300
 // Times for buttons
 let lastClickEnd =     [0, 0, 0, 0]
 let lastPressedStart = [0, 0, 0, 0]
-let inLongClick =    [false, false, false, false]
+let inLongClick =      [false, false, false, false]
 
 // Array of handlers
 let actions : [[Action]] = [
@@ -36,7 +36,7 @@ function doActions(button: number, kind: number) {
     }
 }
 
-function button(i: number) { // i is the button Index (1,2,3)
+function button(i: number) { // i is the button Index (1,2)
     let currentTime = control.millis()
     let pressed = input.buttonIsPressed(i)
 
@@ -61,6 +61,9 @@ function button(i: number) { // i is the button Index (1,2,3)
                     lastClickEnd[i] = currentTime
                 }
             }
+        } else {
+            // Intermediate clicks are ignored
+            lastClickEnd[i] = 0
         }
     }
 }
