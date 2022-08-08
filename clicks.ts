@@ -49,8 +49,8 @@ function button(i: number) { // i is the button Index (1,2,3)
         const holdTime = currentTime - lastPressedStart[i]
         if (holdTime < shortClickTime) {
             if ((lastClickEnd[i] > 0) && (currentTime - lastClickEnd[i] < doubleClickTime)) {
-                doActions(i, DOUBLECLICK)
                 lastClickEnd[i] = 0 // Click ended
+                doActions(i, DOUBLECLICK)
             } else {
                 // If we're in a long click, end it
                 if(inLongClick[i] == true) {
@@ -69,17 +69,17 @@ loops.everyInterval(singleClickCheckTime, function() {
     let currentTime = control.millis()
     for(let i=Button.A;i<=Button.B;i++) {
         if ((lastClickEnd[i] > 0) && (currentTime - lastClickEnd[i] > doubleClickTime)) {
-            doActions(i, SINGLECLICK)
             lastClickEnd[i] = 0
+            doActions(i, SINGLECLICK)
         }
         // Check if we're in a long press
         let pressed = input.buttonIsPressed(i)
         const holdTime = currentTime - lastPressedStart[i]
         if(pressed && (holdTime > longClickTime) ) {
-            doActions(i, LONGCLICK)
             lastClickEnd[i] = 0 // Click ended / not a short click
             inLongClick[i] = true
             lastPressedStart[i] = currentTime // Prepare for 2nd long click
+            doActions(i, LONGCLICK)
         }
     }
 })
