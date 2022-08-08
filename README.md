@@ -27,7 +27,7 @@ Set the actions to do on a double click. *NOTE: Only button A and button B are s
 clicks.onLongClick(button: Button, body: Action) : void
 ``` 
 
-Set the actions to do on a long click. *NOTE: Only button A and button B are supported separately.  Button AB will not work*
+**Long Clicks will repeat while the button is held**.  Set the actions to do on a long click. *NOTE: Only button A and button B are supported separately.  Button AB will not work*
 
 # Acknowledgements 
 

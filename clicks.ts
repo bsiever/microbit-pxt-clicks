@@ -6,7 +6,6 @@
 namespace clicks {
 
 // Button.A = 1, B = 2, AB = 3
-
 const SINGLECLICK = 0
 const DOUBLECLICK = 1
 const LONGCLICK = 2
@@ -15,12 +14,13 @@ const singleClickCheckTime = 100 // ms
 
 const longClickTime = 800 
 const shortClickTime =  500 
-const doubleClickTime = 300      
+const doubleClickTime = 500      
 
 
 // Times for buttons
 let lastClickEnd =     [0, 0, 0, 0]
 let lastPressedStart = [0, 0, 0, 0]
+let inLongClick =    [false, false, false, false]
 
 // Workaround:  Typescript doesn't work with arrays of
 //              of actions (2022-08-07).  Using separate variables. 
@@ -61,18 +61,18 @@ function doActions(button: number, kind: number) {
                 if (bLong) bLong()
                 return
         }
-    } else if (button == Button.AB) {
-        switch (kind) {
-            case SINGLECLICK:
-                if (abSingle) abSingle()
-                return
-            case DOUBLECLICK:
-                if (abDouble) abDouble()
-                return
-            case LONGCLICK:
-                if (abLong) abLong()
-                return
-        }
+    // } else if (button == Button.AB) {
+    //     switch (kind) {
+    //         case SINGLECLICK:
+    //             if (abSingle) abSingle()
+    //             return
+    //         case DOUBLECLICK:
+    //             if (abDouble) abDouble()
+    //             return
+    //         case LONGCLICK:
+    //             if (abLong) abLong()
+    //             return
+    //     }
     }
 }
 
@@ -82,19 +82,23 @@ function button(i: number) { // i is the button Index (1,2,3)
 
     if(pressed) {
         lastPressedStart[i] = currentTime
+        // Haven't started a long click yet
+        inLongClick[i] = false
     } else {
         // Release
         const holdTime = currentTime - lastPressedStart[i]
-        lastPressedStart[i] = 0
-        if(holdTime > longClickTime) {
-            doActions(i, LONGCLICK)
-            lastClickEnd[i] = 0 // Click ended
-        } else if (holdTime < shortClickTime) {
+        if (holdTime < shortClickTime) {
             if ((lastClickEnd[i] > 0) && (currentTime - lastClickEnd[i] < doubleClickTime)) {
                 doActions(i, DOUBLECLICK)
                 lastClickEnd[i] = 0 // Click ended
             } else {
-                lastClickEnd[i] = currentTime
+                // If we're in a long click, end it
+                if(inLongClick[i] == true) {
+                    inLongClick[i] = false
+                } else {
+                    // Otherwise, note the time for short click checks
+                    lastClickEnd[i] = currentTime
+                }
             }
         }
     }
@@ -107,6 +111,14 @@ loops.everyInterval(singleClickCheckTime, function() {
             lastClickEnd[i] = 0
             doActions(i, SINGLECLICK)
         }
+        let pressed = input.buttonIsPressed(i)
+        const holdTime = currentTime - lastPressedStart[i]
+        if(pressed && (holdTime > longClickTime) ) {
+            doActions(i, LONGCLICK)
+            inLongClick[i] = true
+            lastClickEnd[i] = 0 // Click ended
+            lastPressedStart[i] = currentTime
+        }
     }
 })
     // Register Handlers
@@ -118,10 +130,10 @@ loops.everyInterval(singleClickCheckTime, function() {
         EventBusValue.MICROBIT_BUTTON_EVT_DOWN, () => button(Button.B))
     control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_B,
         EventBusValue.MICROBIT_BUTTON_EVT_UP, () => button(Button.B))
-    control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_AB,
-        EventBusValue.MICROBIT_BUTTON_EVT_DOWN, () => button(Button.AB))
-    control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_AB,
-        EventBusValue.MICROBIT_BUTTON_EVT_UP, () => button(Button.AB))
+    // control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_AB,
+    //     EventBusValue.MICROBIT_BUTTON_EVT_DOWN, () => button(Button.AB))
+    // control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_AB,
+    //     EventBusValue.MICROBIT_BUTTON_EVT_UP, () => button(Button.AB))
 
     //% blockId=onSingleClick block="on single click |%NAME"
     //% weight=50
@@ -133,9 +145,9 @@ loops.everyInterval(singleClickCheckTime, function() {
              case Button.B:
                  bSingle = body;
                  return;
-             case Button.AB:
-                 abSingle = body;
-                 return;
+            //  case Button.AB:
+            //      abSingle = body;
+            //      return;
          }
     }
 
@@ -149,9 +161,9 @@ loops.everyInterval(singleClickCheckTime, function() {
             case Button.B:
                 bDouble = body;
                 return;
-            case Button.AB:
-                abDouble = body;
-                return;
+            // case Button.AB:
+            //     abDouble = body;
+            //     return;
         }
     }
 
@@ -165,9 +177,9 @@ loops.everyInterval(singleClickCheckTime, function() {
             case Button.B:
                 bLong = body;
                 return;
-            case Button.AB:
-                abLong = body;
-                return;
+            // case Button.AB:
+            //     abLong = body;
+            //     return;
         }
     }
 }
