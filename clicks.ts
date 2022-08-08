@@ -11,68 +11,28 @@ const DOUBLECLICK = 1
 const LONGCLICK = 2
 
 const singleClickCheckTime = 100 // ms
-
 const longClickTime = 800 
 const shortClickTime =  500 
-const doubleClickTime = 500      
-
+const doubleClickTime = 300      
 
 // Times for buttons
 let lastClickEnd =     [0, 0, 0, 0]
 let lastPressedStart = [0, 0, 0, 0]
 let inLongClick =    [false, false, false, false]
 
-// Workaround:  Typescript doesn't work with arrays of
-//              of actions (2022-08-07).  Using separate variables. 
-let aSingle : Action = null
-let aDouble : Action = null 
-let aLong : Action = null
-let bSingle: Action = null
-let bDouble: Action = null
-let bLong: Action = null
-let abSingle: Action = null
-let abDouble: Action = null
-let abLong: Action = null
-
+// Array of handlers
+let actions : [[Action]] = [
+    null,  
+    [null, null, null],  // A Handlers
+    [null, null, null]   // B Handlers
+];
 
 function doActions(button: number, kind: number) {
-    let action : Action = null
-    if(button == Button.A) {
-        switch(kind) {
-            case SINGLECLICK: 
-               if(aSingle) aSingle()
-               return
-            case DOUBLECLICK:
-                if(aDouble) aDouble()
-                return
-            case LONGCLICK:
-                if(aLong) aLong()
-                return                
-        }
-    } else if (button == Button.B) {
-        switch (kind) {
-            case SINGLECLICK:
-                if (bSingle) bSingle()
-                return
-            case DOUBLECLICK:
-                if (bDouble) bDouble()
-                return
-            case LONGCLICK:
-                if (bLong) bLong()
-                return
-        }
-    // } else if (button == Button.AB) {
-    //     switch (kind) {
-    //         case SINGLECLICK:
-    //             if (abSingle) abSingle()
-    //             return
-    //         case DOUBLECLICK:
-    //             if (abDouble) abDouble()
-    //             return
-    //         case LONGCLICK:
-    //             if (abLong) abLong()
-    //             return
-    //     }
+    // Optional/Null chaining would be nice...
+    let handlers = actions.get(button)
+    if(handlers) {
+        let action = handlers.get(kind)
+        if(action) action()
     }
 }
 
@@ -95,6 +55,7 @@ function button(i: number) { // i is the button Index (1,2,3)
                 // If we're in a long click, end it
                 if(inLongClick[i] == true) {
                     inLongClick[i] = false
+                    lastClickEnd[i] = 0
                 } else {
                     // Otherwise, note the time for short click checks
                     lastClickEnd[i] = currentTime
@@ -106,18 +67,19 @@ function button(i: number) { // i is the button Index (1,2,3)
 
 loops.everyInterval(singleClickCheckTime, function() {
     let currentTime = control.millis()
-    for(let i=1;i<=2;i++) {
+    for(let i=Button.A;i<=Button.B;i++) {
         if ((lastClickEnd[i] > 0) && (currentTime - lastClickEnd[i] > doubleClickTime)) {
-            lastClickEnd[i] = 0
             doActions(i, SINGLECLICK)
+            lastClickEnd[i] = 0
         }
+        // Check if we're in a long press
         let pressed = input.buttonIsPressed(i)
         const holdTime = currentTime - lastPressedStart[i]
         if(pressed && (holdTime > longClickTime) ) {
             doActions(i, LONGCLICK)
+            lastClickEnd[i] = 0 // Click ended / not a short click
             inLongClick[i] = true
-            lastClickEnd[i] = 0 // Click ended
-            lastPressedStart[i] = currentTime
+            lastPressedStart[i] = currentTime // Prepare for 2nd long click
         }
     }
 })
@@ -130,56 +92,31 @@ loops.everyInterval(singleClickCheckTime, function() {
         EventBusValue.MICROBIT_BUTTON_EVT_DOWN, () => button(Button.B))
     control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_B,
         EventBusValue.MICROBIT_BUTTON_EVT_UP, () => button(Button.B))
-    // control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_AB,
-    //     EventBusValue.MICROBIT_BUTTON_EVT_DOWN, () => button(Button.AB))
-    // control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_AB,
-    //     EventBusValue.MICROBIT_BUTTON_EVT_UP, () => button(Button.AB))
 
     //% blockId=onSingleClick block="on single click |%NAME"
     //% weight=50
     export function onSingleClick(button: Button, body: Action) {
-         switch(button) {
-             case Button.A:
-                aSingle = body;
-                return;
-             case Button.B:
-                 bSingle = body;
-                 return;
-            //  case Button.AB:
-            //      abSingle = body;
-            //      return;
-         }
+        if (button < Button.AB) {
+            let buttonHandlers = actions.get(button)
+            buttonHandlers.set(SINGLECLICK, body)
+        }
     }
 
     //% blockId=onDoubleClick block="on double click |%NAME" 
     //% weight=25
     export function onDoubleClick(button: Button, body: Action) {
-        switch (button) {
-            case Button.A:
-                aDouble = body;
-                return;
-            case Button.B:
-                bDouble = body;
-                return;
-            // case Button.AB:
-            //     abDouble = body;
-            //     return;
+        if(button < Button.AB) {
+            let buttonHandlers = actions.get(button)
+            buttonHandlers.set(DOUBLECLICK, body)
         }
     }
 
     //% blockId=onLongClick block="on long click |%NAME"
     //% weight=10
     export function onLongClick(button: Button, body: Action) {
-        switch (button) {
-            case Button.A:
-                aLong = body;
-                return;
-            case Button.B:
-                bLong = body;
-                return;
-            // case Button.AB:
-            //     abLong = body;
-            //     return;
+        if (button < Button.AB) {
+            let buttonHandlers = actions.get(button)
+            buttonHandlers.set(LONGCLICK, body)
         }
     }
 }
