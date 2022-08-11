@@ -4,7 +4,6 @@
 pins=github:bsiever/microbit-pxt-clicks
 ```
 
-
 # Single Clicks
 
 ```sig
