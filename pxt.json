@@ -1,6 +1,5 @@
 {
     "name": "microbit-pxt-clicks",
-    "version": "0.0.3",
     "description": "Add different `click` behaviors (single, double, etc.)",
     "license": "MIT",
     "dependencies": {
