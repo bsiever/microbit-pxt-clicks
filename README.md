@@ -1,32 +1,126 @@
 # Clicks
 
 ```package
-pins=github:bsiever/microbit-pxt-clicks
+microbit-pxt-clicks=github:bsiever/microbit-pxt-clicks
 ```
 
-# Single Clicks
+This extension allows expands the behaviors supported by the A & B buttons.  It supports (mutually exclusive) detection of a single click of a button, a double click of a button, or holding a button down. 
+
+These behave a lot like the touch screen, where the user can tap, double tap, or hold down.  
+
+They are different than ``[input.onButtonPressed()]``, which detects when a button is pressed.  When a button is "double clicked" would call the event handler twice. Holding a button would cause the event handler to be called once.  There would be easy way to distinguish between the three different types of behavior. 
+
+
+# Single Button Clicks
 
 ```sig
-clicks.onSingleClick(button: Button, body: Action) : void
+clicks.onButtonSingleClicked(button: Button, body: Action) : void
 ``` 
 
-Set the actions to do on a single click. *NOTE: Only button A and button B are supported separately.  Button AB will not work*
+Set the actions to do on a single click. *NOTE: Only button A and button B are supported separately.  Button AB will not work.*
 
-# Double Clicks
+# Double Button Clicks
 
 ```sig
-clicks.onDoubleClick(button: Button, body: Action) : void
+clicks.onButtonDoubleClicked(button: Button, body: Action) : void
 ``` 
 
-Set the actions to do on a double click. *NOTE: Only button A and button B are supported separately.  Button AB will not work*
+Set the actions to do on a double click. *NOTE: Only button A and button B are supported separately.  Button AB will not work.*
 
-# Long Clicks
+# Holding buttons (Long Clicks)
 
 ```sig
-clicks.onLongClick(button: Button, body: Action) : void
+clicks.onButtonHeld(button: Button, body: Action) : void
 ``` 
 
-**Long Clicks will repeat while the button is held**.  Set the actions to do on a long click. *NOTE: Only button A and button B are supported separately.  Button AB will not work*
+**Hold the button will cause this event to happen repeated while the button is held**.  Set the actions to do on a long click. *NOTE: Only button A and button B are supported separately.  Button AB will not work.*
+
+# Example 
+
+The following program will show the behavior on both the LED grid and the serial console.  
+
+* The buttons that cause a event will be shown at the top row of LEDs:
+  * Interaction with button A will be indicated with a single LED in the upper *left*.
+  * Interaction with button B will be indicated with a single LED in the upper *right*. 
+* The specific event will be indicated on the bottom row:
+  * A single click will be shown with a single LED on the bottom left. 
+  * A double click will be shown with a two LEDs on the bottom (leftmost and middle). 
+  * Holding a button will be shown by lighting all five LEDs.
+
+```block
+clicks.onButtonSingleClicked(Button.A, function () {
+    serial.writeLine("A single")
+    basic.showLeds(`
+        # . . . .
+        . . . . .
+        . . . . .
+        . . . . .
+        # . . . .
+        `)
+    showClear()
+})
+clicks.onButtonHeld(Button.B, function () {
+    serial.writeLine("B held")
+    basic.showLeds(`
+        . . . . #
+        . . . . .
+        . . . . .
+        . . . . .
+        # # # # #
+        `)
+    showClear()
+})
+clicks.onButtonHeld(Button.A, function () {
+    serial.writeLine("A held")
+    basic.showLeds(`
+        # . . . .
+        . . . . .
+        . . . . .
+        . . . . .
+        # # # # #
+        `)
+    showClear()
+})
+clicks.onButtonSingleClicked(Button.B, function () {
+    serial.writeLine("B single")
+    basic.showLeds(`
+        . . . . #
+        . . . . .
+        . . . . .
+        . . . . .
+        # . . . .
+        `)
+    showClear()
+})
+function showClear() {
+    basic.pause(100)
+    basic.clearScreen()
+}
+clicks.onButtonDoubleClicked(Button.A, function () {
+    serial.writeLine("A double")
+    basic.showLeds(`
+        # . . . .
+        . . . . .
+        . . . . .
+        . . . . .
+        # . # . .
+        `)
+    showClear()
+})
+clicks.onButtonDoubleClicked(Button.B, function () {
+    serial.writeLine("B double")
+    basic.showLeds(`
+        . . . . #
+        . . . . .
+        . . . . .
+        . . . . .
+        # . # . .
+        `)
+    showClear()
+})
+basic.showIcon(IconNames.Heart)
+```
+
 
 # Acknowledgements 
 

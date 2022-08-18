@@ -96,27 +96,27 @@ loops.everyInterval(singleClickCheckTime, function() {
     control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_B,
         EventBusValue.MICROBIT_BUTTON_EVT_UP, () => button(Button.B))
 
-    //% blockId=onSingleClick block="on single click |%NAME"
+    //% blockId=onButtonSingleClicked block="on button |%NAME single clicked"
     //% weight=50
-    export function onSingleClick(button: Button, body: Action) {
+    export function onButtonSingleClicked(button: Button, body: Action) {
         if (button < Button.AB) {
             let buttonHandlers = actions.get(button)
             buttonHandlers.set(SINGLECLICK, body)
         }
     }
 
-    //% blockId=onDoubleClick block="on double click |%NAME" 
+    //% blockId=onButtonDoubleClicked block="on button |%NAME double clicked "
     //% weight=25
-    export function onDoubleClick(button: Button, body: Action) {
+    export function onButtonDoubleClicked(button: Button, body: Action) {
         if(button < Button.AB) {
             let buttonHandlers = actions.get(button)
             buttonHandlers.set(DOUBLECLICK, body)
         }
     }
 
-    //% blockId=onLongClick block="on long click |%NAME"
+    //% blockId=onButtonHeld block="on button |%NAME held"
     //% weight=10
-    export function onLongClick(button: Button, body: Action) {
+    export function onButtonHeld(button: Button, body: Action) {
         if (button < Button.AB) {
             let buttonHandlers = actions.get(button)
             buttonHandlers.set(LONGCLICK, body)
