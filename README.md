@@ -1,4 +1,4 @@
-# Clicks
+# Button Clicks
 
 This extension allows expands the behaviors supported by the A & B buttons.  It supports (mutually exclusive) detection of a single click of a button, a double click of a button, or holding a button down. 
 
@@ -10,7 +10,7 @@ They are different than ``[input.onButtonPressed()]``, which detects when a butt
 # Single Button Clicks
 
 ```sig
-clicks.onButtonSingleClicked(button: Button, body: Action) : void
+buttonClicks.onButtonSingleClicked(button: buttonClicks.AorB, body: Action) : void
 ``` 
 
 Set the actions to do on a single click. *NOTE: Only button A and button B are supported separately.  Button AB will not work.*
@@ -18,7 +18,7 @@ Set the actions to do on a single click. *NOTE: Only button A and button B are s
 # Double Button Clicks
 
 ```sig
-clicks.onButtonDoubleClicked(button: Button, body: Action) : void
+buttonClicks.onButtonDoubleClicked(button: buttonClicks.AorB, body: Action) : void
 ``` 
 
 Set the actions to do on a double click. *NOTE: Only button A and button B are supported separately.  Button AB will not work.*
@@ -26,10 +26,30 @@ Set the actions to do on a double click. *NOTE: Only button A and button B are s
 # Holding buttons (Long Clicks)
 
 ```sig
-clicks.onButtonHeld(button: Button, body: Action) : void
+buttonClicks.onButtonHeld(button: buttonClicks.AorB, body: Action) : void
 ``` 
 
+Set the actions to do while the button is held down.
+
 **Hold the button will cause this event to happen repeated while the button is held**.  Set the actions to do on a long click. *NOTE: Only button A and button B are supported separately.  Button AB will not work.*
+
+
+# Button Down 
+
+```sig
+buttonClicks.onButtonDown(button: buttonClicks.AorB, body: Action) : void
+``` 
+
+Set the actions to do when the button first makes contact when being pressed. This will run before other events, like single click, double click, and long click.
+
+
+# Button Up
+
+```sig
+buttonClicks.onButtonUp(button: buttonClicks.AorB, body: Action) : void
+``` 
+
+Set the actions to do when the button is released. This will run before before events, like single click, double click, and long click.
 
 # Example 
 
@@ -47,7 +67,7 @@ The following program will show the behavior on both the LED grid and the serial
   * Holding a button will be shown by lighting all five LEDs.
 
 ```block
-buttonClicks.onButtonSingleClicked(Button.A, function () {
+buttonClicks.onButtonSingleClicked(buttonClicks.AorB.A, function () {
     serial.writeLine("A single")
     basic.showLeds(`
         # . . . .
@@ -59,7 +79,7 @@ buttonClicks.onButtonSingleClicked(Button.A, function () {
     showClear()
 })
 
-buttonClicks.onButtonDoubleClicked(Button.A, function () {
+buttonClicks.onButtonDoubleClicked(buttonClicks.AorB.A, function () {
     serial.writeLine("A double")
     basic.showLeds(`
         # . . . .
@@ -71,7 +91,7 @@ buttonClicks.onButtonDoubleClicked(Button.A, function () {
     showClear()
 })
 
-buttonClicks.onButtonHeld(Button.A, function () {
+buttonClicks.onButtonHeld(buttonClicks.AorB.A, function () {
     serial.writeLine("A held")
     basic.showLeds(`
         # . . . .
@@ -83,18 +103,18 @@ buttonClicks.onButtonHeld(Button.A, function () {
     showClear()
 })
 
-buttonClicks.onButtonDown(Button.A, function () {
+buttonClicks.onButtonDown(buttonClicks.AorB.A, function () {
     serial.writeLine("A down")
     led.toggle(0, 1)
 })
-buttonClicks.onButtonUp(Button.A, function () {
+buttonClicks.onButtonUp(buttonClicks.AorB.A, function () {
     serial.writeLine("A up")
     led.toggle(0, 1)
 })
 
 
 
-buttonClicks.onButtonSingleClicked(Button.B, function () {
+buttonClicks.onButtonSingleClicked(buttonClicks.AorB.B, function () {
     serial.writeLine("B single")
     basic.showLeds(`
         . . . . #
@@ -110,7 +130,7 @@ function showClear() {
     basic.clearScreen()
 }
 
-buttonClicks.onButtonDoubleClicked(Button.B, function () {
+buttonClicks.onButtonDoubleClicked(buttonClicks.AorB.B, function () {
     serial.writeLine("B double")
     basic.showLeds(`
         . . . . #
@@ -122,7 +142,7 @@ buttonClicks.onButtonDoubleClicked(Button.B, function () {
     showClear()
 })
 
-buttonClicks.onButtonHeld(Button.B, function () {
+buttonClicks.onButtonHeld(buttonClicks.AorB.B, function () {
     serial.writeLine("B held")
     basic.showLeds(`
         . . . . #
@@ -134,11 +154,11 @@ buttonClicks.onButtonHeld(Button.B, function () {
     showClear()
 })
 
-buttonClicks.onButtonDown(Button.B, function () {
+buttonClicks.onButtonDown(buttonClicks.AorB.B, function () {
     serial.writeLine("B down")
     led.toggle(4, 1)
 })
-buttonClicks.onButtonUp(Button.B, function () {
+buttonClicks.onButtonUp(buttonClicks.AorB.B, function () {
     serial.writeLine("B up")
     led.toggle(4, 1)
 })

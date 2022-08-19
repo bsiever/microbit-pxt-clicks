@@ -22,6 +22,11 @@ let lastClickEnd =     [0, 0, 0, 0]
 let lastPressedStart = [0, 0, 0, 0]
 let inLongClick =      [false, false, false, false]
 
+export enum AorB { // Thanks Martin Williams / https://support.microbit.org/support/tickets/55867
+    A = 1,
+    B = 2
+}
+
 // Array of handlers
 let actions : [[Action]] = [
     null,  
@@ -90,59 +95,49 @@ loops.everyInterval(singleClickCheckTime, function() {
         }
     }
 })
-    // Register Handlers
-    control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_A,
-        EventBusValue.MICROBIT_BUTTON_EVT_DOWN, () => button(Button.A))
-    control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_A,
-        EventBusValue.MICROBIT_BUTTON_EVT_UP, () => button(Button.A))
-    control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_B,
-        EventBusValue.MICROBIT_BUTTON_EVT_DOWN, () => button(Button.B))
-    control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_B,
-        EventBusValue.MICROBIT_BUTTON_EVT_UP, () => button(Button.B))
+// Register Handlers
+control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_A,
+    EventBusValue.MICROBIT_BUTTON_EVT_DOWN, () => button(Button.A))
+control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_A,
+    EventBusValue.MICROBIT_BUTTON_EVT_UP, () => button(Button.A))
+control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_B,
+    EventBusValue.MICROBIT_BUTTON_EVT_DOWN, () => button(Button.B))
+control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_B,
+    EventBusValue.MICROBIT_BUTTON_EVT_UP, () => button(Button.B))
 
-    //% blockId=onButtonSingleClicked block="on button |%NAME single clicked"
-    //% weight=50
-    export function onButtonSingleClicked(button: Button, body: Action) {
-        if (button < Button.AB) {
-            let buttonHandlers = actions.get(button)
-            buttonHandlers.set(SINGLECLICK, body)
-        }
-    }
+//% blockId=onButtonSingleClicked block="on button |%NAME single clicked"
+//% weight=100
+export function onButtonSingleClicked(button: AorB, body: Action) {
+    let buttonHandlers = actions.get(button)
+    buttonHandlers.set(SINGLECLICK, body)
+}
 
-    //% blockId=onButtonDoubleClicked block="on button |%NAME double clicked "
-    //% weight=25
-    export function onButtonDoubleClicked(button: Button, body: Action) {
-        if(button < Button.AB) {
-            let buttonHandlers = actions.get(button)
-            buttonHandlers.set(DOUBLECLICK, body)
-        }
-    }
+//% blockId=onButtonDoubleClicked block="on button |%NAME double clicked "
+//% weight=75
+export function onButtonDoubleClicked(button: AorB, body: Action) {
+    let buttonHandlers = actions.get(button)
+    buttonHandlers.set(DOUBLECLICK, body)
+}
 
-    //% blockId=onButtonHeld block="on button |%NAME held"
-    //% weight=10
-    export function onButtonHeld(button: Button, body: Action) {
-        if (button < Button.AB) {
-            let buttonHandlers = actions.get(button)
-            buttonHandlers.set(LONGCLICK, body)
-        }
-    }
+//% blockId=onButtonHeld block="on button |%NAME held"
+//% weight=50
+export function onButtonHeld(button: AorB, body: Action) {
+    let buttonHandlers = actions.get(button)
+    buttonHandlers.set(LONGCLICK, body)
+}
 
 
-    //% blockId=onButtonDown block="on button |%NAME down "
-    //% weight=25
-    export function onButtonDown(button: Button, body: Action) {
-        if (button < Button.AB) {
-            let buttonHandlers = actions.get(button)
-            buttonHandlers.set(BUTTONDOWN, body)
-        }
-    }
+//% blockId=onButtonDown block="on button |%NAME down "
+//% weight=25
+export function onButtonDown(button: AorB, body: Action) {
+    let buttonHandlers = actions.get(button)
+    buttonHandlers.set(BUTTONDOWN, body)
+}
 
-    //% blockId=onButtonUp block="on button |%NAME up "
-    //% weight=25
-    export function onButtonUp(button: Button, body: Action) {
-        if (button < Button.AB) {
-            let buttonHandlers = actions.get(button)
-            buttonHandlers.set(BUTTONUP, body)
-        }
-    }
+//% blockId=onButtonUp block="on button |%NAME up "
+//% weight=10
+export function onButtonUp(button: AorB, body: Action) {
+    let buttonHandlers = actions.get(button)
+    buttonHandlers.set(BUTTONUP, body)
+}
 }
