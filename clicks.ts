@@ -9,6 +9,8 @@ namespace buttonClicks {
 const SINGLECLICK = 0
 const DOUBLECLICK = 1
 const LONGCLICK = 2
+const BUTTONDOWN = 3
+const BUTTONUP = 4
 
 const singleClickCheckTime = 100 // ms
 const longClickTime = 800 
@@ -23,8 +25,8 @@ let inLongClick =      [false, false, false, false]
 // Array of handlers
 let actions : [[Action]] = [
     null,  
-    [null, null, null],  // A Handlers
-    [null, null, null]   // B Handlers
+    [null, null, null, null, null],  // A Handlers
+    [null, null, null, null, null]   // B Handlers
 ];
 
 function doActions(button: number, kind: number) {
@@ -41,11 +43,13 @@ function button(i: number) { // i is the button Index (1,2)
     let pressed = input.buttonIsPressed(i)
 
     if(pressed) {
+        doActions(i, BUTTONDOWN)
         lastPressedStart[i] = currentTime
         // Haven't started a long click yet
         inLongClick[i] = false
     } else {
         // Release
+        doActions(i, BUTTONUP)
         const holdTime = currentTime - lastPressedStart[i]
         if (holdTime < shortClickTime) {
             if ((lastClickEnd[i] > 0) && (currentTime - lastClickEnd[i] < doubleClickTime)) {
@@ -120,6 +124,25 @@ loops.everyInterval(singleClickCheckTime, function() {
         if (button < Button.AB) {
             let buttonHandlers = actions.get(button)
             buttonHandlers.set(LONGCLICK, body)
+        }
+    }
+
+
+    //% blockId=onButtonDown block="on button |%NAME down "
+    //% weight=25
+    export function onButtonDown(button: Button, body: Action) {
+        if (button < Button.AB) {
+            let buttonHandlers = actions.get(button)
+            buttonHandlers.set(BUTTONDOWN, body)
+        }
+    }
+
+    //% blockId=onButtonUp block="on button |%NAME up "
+    //% weight=25
+    export function onButtonUp(button: Button, body: Action) {
+        if (button < Button.AB) {
+            let buttonHandlers = actions.get(button)
+            buttonHandlers.set(BUTTONUP, body)
         }
     }
 }
