@@ -35,16 +35,19 @@ clicks.onButtonHeld(button: Button, body: Action) : void
 
 The following program will show the behavior on both the LED grid and the serial console.  
 
-* The buttons that cause a event will be shown at the top row of LEDs:
+* The buttons that cause a click event will be shown at the top row of LEDs:
   * Interaction with button A will be indicated with a single LED in the upper *left*.
   * Interaction with button B will be indicated with a single LED in the upper *right*. 
+* The second row will show the up/down events briefly (it may be erased when other events happen)
+  * The left LED will toggle on/off when button A is pressed/released
+  * The right LED will toggle on/off when button A is pressed/released
 * The specific event will be indicated on the bottom row:
   * A single click will be shown with a single LED on the bottom left. 
   * A double click will be shown with a two LEDs on the bottom (leftmost and middle). 
   * Holding a button will be shown by lighting all five LEDs.
 
 ```block
-clicks.onButtonSingleClicked(Button.A, function () {
+buttonClicks.onButtonSingleClicked(Button.A, function () {
     serial.writeLine("A single")
     basic.showLeds(`
         # . . . .
@@ -55,18 +58,20 @@ clicks.onButtonSingleClicked(Button.A, function () {
         `)
     showClear()
 })
-clicks.onButtonHeld(Button.B, function () {
-    serial.writeLine("B held")
+
+buttonClicks.onButtonDoubleClicked(Button.A, function () {
+    serial.writeLine("A double")
     basic.showLeds(`
-        . . . . #
+        # . . . .
         . . . . .
         . . . . .
         . . . . .
-        # # # # #
+        # . # . .
         `)
     showClear()
 })
-clicks.onButtonHeld(Button.A, function () {
+
+buttonClicks.onButtonHeld(Button.A, function () {
     serial.writeLine("A held")
     basic.showLeds(`
         # . . . .
@@ -77,7 +82,19 @@ clicks.onButtonHeld(Button.A, function () {
         `)
     showClear()
 })
-clicks.onButtonSingleClicked(Button.B, function () {
+
+buttonClicks.onButtonDown(Button.A, function () {
+    serial.writeLine("A down")
+    led.toggle(0, 1)
+})
+buttonClicks.onButtonUp(Button.A, function () {
+    serial.writeLine("A up")
+    led.toggle(0, 1)
+})
+
+
+
+buttonClicks.onButtonSingleClicked(Button.B, function () {
     serial.writeLine("B single")
     basic.showLeds(`
         . . . . #
@@ -92,18 +109,8 @@ function showClear() {
     basic.pause(100)
     basic.clearScreen()
 }
-clicks.onButtonDoubleClicked(Button.A, function () {
-    serial.writeLine("A double")
-    basic.showLeds(`
-        # . . . .
-        . . . . .
-        . . . . .
-        . . . . .
-        # . # . .
-        `)
-    showClear()
-})
-clicks.onButtonDoubleClicked(Button.B, function () {
+
+buttonClicks.onButtonDoubleClicked(Button.B, function () {
     serial.writeLine("B double")
     basic.showLeds(`
         . . . . #
@@ -114,6 +121,28 @@ clicks.onButtonDoubleClicked(Button.B, function () {
         `)
     showClear()
 })
+
+buttonClicks.onButtonHeld(Button.B, function () {
+    serial.writeLine("B held")
+    basic.showLeds(`
+        . . . . #
+        . . . . .
+        . . . . .
+        . . . . .
+        # # # # #
+        `)
+    showClear()
+})
+
+buttonClicks.onButtonDown(Button.B, function () {
+    serial.writeLine("B down")
+    led.toggle(4, 1)
+})
+buttonClicks.onButtonUp(Button.B, function () {
+    serial.writeLine("B up")
+    led.toggle(4, 1)
+})
+
 basic.showIcon(IconNames.Heart)
 ```
 
