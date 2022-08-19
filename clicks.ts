@@ -2,7 +2,7 @@
 
 //% color=#0000FF 
 //% icon="\uf0a7"
-//% block="Button Clicks"
+//% block="Button clicks"
 namespace buttonClicks {
 
 // Button.A = 1, B = 2, AB = 3
