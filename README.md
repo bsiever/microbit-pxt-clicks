@@ -1,9 +1,5 @@
 # Clicks
 
-```package
-microbit-pxt-clicks=github:bsiever/microbit-pxt-clicks
-```
-
 This extension allows expands the behaviors supported by the A & B buttons.  It supports (mutually exclusive) detection of a single click of a button, a double click of a button, or holding a button down. 
 
 These behave a lot like the touch screen, where the user can tap, double tap, or hold down.  
@@ -134,6 +130,9 @@ I develop micro:bit extensions in my spare time to support activities I'm enthus
 
 for PXT/microbit
 
+```package
+microbit-pxt-clicks=github:bsiever/microbit-pxt-clicks
+```
 
 <script src="https://makecode.com/gh-pages-embed.js"></script>
 <script>makeCodeRender("{{ site.makecode.home_url }}", "{{ site.github.owner_name }}/{{ site.github.repository_name }}");</script>
