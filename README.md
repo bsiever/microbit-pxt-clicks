@@ -13,7 +13,7 @@ They are different than ``[input.onButtonPressed()]``, which detects when a butt
 buttonClicks.onButtonSingleClicked(button: buttonClicks.AorB, body: Action) : void
 ``` 
 
-Set the actions to do on a single click. *NOTE: Only button A and button B are supported separately.  Button AB will not work.*
+Set the actions to do on a single click. 
 
 # Double Button Clicks
 
@@ -21,7 +21,7 @@ Set the actions to do on a single click. *NOTE: Only button A and button B are s
 buttonClicks.onButtonDoubleClicked(button: buttonClicks.AorB, body: Action) : void
 ``` 
 
-Set the actions to do on a double click. *NOTE: Only button A and button B are supported separately.  Button AB will not work.*
+Set the actions to do on a double click. 
 
 # Holding buttons (Long Clicks)
 
@@ -31,7 +31,14 @@ buttonClicks.onButtonHeld(button: buttonClicks.AorB, body: Action) : void
 
 Set the actions to do while the button is held down.
 
-**Hold the button will cause this event to happen repeated while the button is held**.  Set the actions to do on a long click. *NOTE: Only button A and button B are supported separately.  Button AB will not work.*
+### ~alert
+
+# Holding a button down 
+
+Holding the button will cause this event to happen repeated while the button is held.  
+
+### ~
+
 
 
 # Button Down 
