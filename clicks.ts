@@ -18,23 +18,23 @@ const shortClickTime =  500
 const doubleClickTime = 300      
 
 // Times for buttons
-let lastClickEnd =     [0, 0, 0, 0]
-let lastPressedStart = [0, 0, 0, 0]
-let inLongClick =      [false, false, false, false]
+let lastClickEnd =     [0, 0]
+let lastPressedStart = [0, 0]
+let inLongClick =      [false, false]
 
 export enum AorB { // Thanks Martin Williams / https://support.microbit.org/support/tickets/55867
-    A = 1,
-    B = 2
+    A = 0,
+    B = 1
 }
 
 // Array of handlers
-let actions : [[Action]] = [
-    null,  
+let actions : [[Action]] = [ 
     [null, null, null, null, null],  // A Handlers
     [null, null, null, null, null]   // B Handlers
 ];
 
-function doActions(button: number, kind: number) {
+// Button is AorB (0-based)
+function doActions(button: AorB, kind: number) {
     // Optional/Null chaining would be nice...
     let handlers = actions.get(button)
     if(handlers) {
@@ -43,9 +43,10 @@ function doActions(button: number, kind: number) {
     }
 }
 
-function button(i: number) { // i is the button Index (1,2)
+function button(i: number) { // i is the Button Index (1,2)
     let currentTime = control.millis()
     let pressed = input.buttonIsPressed(i)
+    i--;  // Adjust to 0-based AorB and array index.
 
     if(pressed) {
         doActions(i, BUTTONDOWN)
@@ -79,13 +80,15 @@ function button(i: number) { // i is the button Index (1,2)
 
 loops.everyInterval(singleClickCheckTime, function() {
     let currentTime = control.millis()
-    for(let i=Button.A;i<=Button.B;i++) {
+    // i is index and AorB  (0-based)
+    for(let i=Button.A-1;i<=Button.B-1;i++) {
         if ((lastClickEnd[i] > 0) && (currentTime - lastClickEnd[i] > doubleClickTime)) {
             lastClickEnd[i] = 0
             doActions(i, SINGLECLICK)
         }
         // Check if we're in a long press
-        let pressed = input.buttonIsPressed(i)
+        // Button indices are 1-based (i+1).
+        let pressed = input.buttonIsPressed(i+1)
         const holdTime = currentTime - lastPressedStart[i]
         if(pressed && (holdTime > longClickTime) ) {
             lastClickEnd[i] = 0 // Click ended / not a short click
