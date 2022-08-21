@@ -23,7 +23,7 @@ buttonClicks.onButtonDoubleClicked(button: buttonClicks.AorB, body: Action) : vo
 
 Set the actions to do on a double click. 
 
-# Holding buttons (Long Clicks)
+# Holding Buttons (Long Clicks)
 
 ```sig
 buttonClicks.onButtonHeld(button: buttonClicks.AorB, body: Action) : void
@@ -169,6 +169,12 @@ basic.showIcon(IconNames.Heart)
 # Acknowledgements 
 
 Icon based on [Font Awesome icon 0xF0A7](https://www.iconfinder.com/search?q=f0a7) SVG.
+
+This extension was partly imspired by a question from Daniel Gallichan on the micro:bit Slack forums.  I wanted this sort of behavior too, but Daniel's question made me think carefully about it.  
+
+Jonny Austin and Martin Williams provided guidance on additional features and a lot of pre-release cleanup.
+
+Thanks to Daniel, Jonny, and Martin!
 
 # Misc. 
 
