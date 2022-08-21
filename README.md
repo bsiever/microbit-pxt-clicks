@@ -47,7 +47,7 @@ Holding the button will cause this event to happen repeated while the button is 
 buttonClicks.onButtonDown(button: buttonClicks.AorB, body: Action) : void
 ``` 
 
-Set the actions to do when the button first makes contact when being pressed. This will run before other events, like single click, double click, and long click.
+Set the actions to do when the button first makes contact when being pressed. This will run before other events, like single click, double click, and button held.
 
 
 # Button Up
@@ -56,7 +56,7 @@ Set the actions to do when the button first makes contact when being pressed. Th
 buttonClicks.onButtonUp(button: buttonClicks.AorB, body: Action) : void
 ``` 
 
-Set the actions to do when the button is released. This will run before before events, like single click, double click, and long click.
+Set the actions to do when the button is released. This will run before before events, like single click, double click, and button held.
 
 # Example 
 
