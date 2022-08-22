@@ -1,6 +1,6 @@
 # Button Clicks
 
-This extension allows expands the behaviors supported by the A & B buttons.  It supports (mutually exclusive) detection of a single click of a button, a double click of a button, or holding a button down. 
+This extension expands the behaviors supported by the A & B buttons.  It supports (mutually exclusive) detection of a single click of a button, a double click of a button, or holding a button down. 
 
 These behave a lot like the touch screen, where the user can tap, double tap, or hold down.  
 
