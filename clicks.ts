@@ -131,14 +131,14 @@ export function onButtonHeld(button: AorB, body: Action) {
 
 
 //% blockId=onButtonDown block="on button |%NAME down "
-//% weight=25
+//% weight=25 advanced=true
 export function onButtonDown(button: AorB, body: Action) {
     let buttonHandlers = actions.get(button)
     buttonHandlers.set(BUTTONDOWN, body)
 }
 
 //% blockId=onButtonUp block="on button |%NAME up "
-//% weight=10
+//% weight=10 advanced=true
 export function onButtonUp(button: AorB, body: Action) {
     let buttonHandlers = actions.get(button)
     buttonHandlers.set(BUTTONUP, body)
