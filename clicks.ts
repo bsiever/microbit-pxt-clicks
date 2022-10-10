@@ -1,6 +1,6 @@
 
 
-//% color=#0000FF 
+//% color=#cf64ed
 //% icon="\uf0a7"
 //% block="Button clicks"
 namespace buttonClicks {
