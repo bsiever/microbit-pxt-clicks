@@ -3,6 +3,7 @@
 //% color=#cf64ed
 //% icon="\uf0a7"
 //% block="Button clicks"
+//% groups="['Advanced']"
 namespace buttonClicks {
 
 // Button.A = 1, B = 2, AB = 3
@@ -109,7 +110,7 @@ control.onEvent(EventBusSource.MICROBIT_ID_BUTTON_B,
     EventBusValue.MICROBIT_BUTTON_EVT_UP, () => button(Button.B))
 
 //% blockId=onButtonSingleClicked block="on button |%NAME single clicked"
-//% weight=100
+//% weight=100 
 export function onButtonSingleClicked(button: AorB, body: Action) {
     let buttonHandlers = actions.get(button)
     buttonHandlers.set(SINGLECLICK, body)
@@ -131,14 +132,16 @@ export function onButtonHeld(button: AorB, body: Action) {
 
 
 //% blockId=onButtonDown block="on button |%NAME down "
-//% weight=25 advanced=true
+//% weight=25 
+//% group="Advanced"
 export function onButtonDown(button: AorB, body: Action) {
     let buttonHandlers = actions.get(button)
     buttonHandlers.set(BUTTONDOWN, body)
 }
 
 //% blockId=onButtonUp block="on button |%NAME up "
-//% weight=10 advanced=true
+//% weight=10 
+//% group="Advanced"
 export function onButtonUp(button: AorB, body: Action) {
     let buttonHandlers = actions.get(button)
     buttonHandlers.set(BUTTONUP, body)
