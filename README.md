@@ -4,7 +4,7 @@ This extension expands the behaviors supported by the A & B buttons.  It support
 
 These behave a lot like the touch screen, where the user can tap, double tap, or hold down.  
 
-They are different than ``[input.onButtonPressed()]``, which detects when a button is pressed.  When a button is "double clicked" would call the event handler twice. Holding a button would cause the event handler to be called once.  There would be easy way to distinguish between the three different types of behavior. 
+They are different than ``[input.onButtonPressed()]``, which detects when a button is pressed.  When a button is "double clicked" would call the event handler twice. Holding a button would cause the event handler to be called once.  The basic eveng handler does not have an be easy way to distinguish between the three different types of behavior. 
 
 
 # Single Button Clicks
